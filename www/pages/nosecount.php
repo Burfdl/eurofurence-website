@@ -115,6 +115,17 @@
 	#ef-rs-age-avg-container {
 		margin-top: calc(30px + .33em);
 	}
+
+	.sr-only {
+		block-size: 1px;
+		border: 0;
+		clip: rect(0, 0, 0, 0);
+		inline-size: 1px;
+		margin: -1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+	}
 </style>
 
 <section id="ef-regstats">
@@ -132,20 +143,40 @@
 		<div>
 			<div class="uk-card uk-card-default uk-card-body">
 				<h3 class="uk-card-title">Registration State</h3>
-				<div class="ef-rs-legend uk-flex">
+				<div class="ef-rs-legend uk-flex" aria-hidden="true" role="presentation">
 					<div class="ef-rs-piechart"><canvas id="ef-rs-reg-status"></canvas></div>
 					<div id="ef-rs-reg-status-legend"></div>
 				</div>
+
+				<table id="ef-rs-reg-status-table" class="sr-only">
+					<thead>
+						<th>Registration State</th>
+						<th>Count</th>
+					</thead>
+					<tbody>
+						<!-- populated by js -->
+					</tbody>
+				</table>
 			</div>
 		</div>
 
 		<div>
 			<div class="uk-card uk-card-default uk-card-body">
 				<h3 class="uk-card-title">Ticket Types</h3>
-				<div class="ef-rs-legend uk-flex">
+				<div class="ef-rs-legend uk-flex" aria-hidden="true" role="presentation">
 					<div class="ef-rs-piechart"><canvas id="ef-rs-reg-types"></canvas></div>
 					<div id="ef-rs-reg-types-legend"></div>
 				</div>
+				<!-- simplified table view for screen readers -->
+				<table id="ef-rs-reg-types-table" class="sr-only">
+					<thead>
+						<th>Ticket type</th>
+						<th>Count</th>
+					</thead>
+					<tbody>
+						<!-- populated by js -->
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
@@ -225,4 +256,4 @@
 </div>
 
 <script src="js/chart.js"></script>
-<script src="js/regstats.min.js"></script>
+<script src="js/regstats.js"></script>

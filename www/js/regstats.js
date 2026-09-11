@@ -376,7 +376,7 @@ class RegStats
 
     initStatus()
     {
-        return new Chart(document.getElementById('ef-rs-reg-status'),
+        const chart = new Chart(document.getElementById('ef-rs-reg-status'),
         {
             type: 'doughnut',
             data: {
@@ -419,6 +419,16 @@ class RegStats
             },
             plugins: [htmlLegendPlugin]
         });
+
+        const statusTbody = document.querySelector("#ef-rs-reg-status-table tbody");
+        chart.data.labels.forEach((label, index) => {
+            const slug = label.toLowerCase().replaceAll(/[^a-z]/g, '-');
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${label}</td><td id="ef-rs-reg-status-table-${slug}">${chart.data.datasets[0].data[index]}</td>`
+            statusTbody.appendChild(row);
+        });
+
+        return chart;
     }
 
     updateStatus()
@@ -448,11 +458,20 @@ class RegStats
             document.getElementById('ef-rs-intro-paid').innerText = (this.data.status['partially paid'] || 0) + (this.data.status.paid || 0);
         if (document.getElementById('ef-rs-intro-checked-in'))
             document.getElementById('ef-rs-intro-checked-in').innerText = this.data.status['checked in'] || 0;
+
+        this.charts.status.data.labels.forEach((label, index) => {
+            const slug = label.toLowerCase().replaceAll(/[^a-z]/g, "-");
+            const element = document.getElementById(`ef-rs-reg-status-table-${slug}`)
+            const latest = values[index].toString();
+            if (element.innerText !== latest) {
+                element.innerText = latest;
+            }
+        })
     }
 
     initTypes()
     {
-        return new Chart(document.getElementById('ef-rs-reg-types'),
+        const chart = new Chart(document.getElementById('ef-rs-reg-types'),
         {
             type: 'doughnut',
             data: {
@@ -488,6 +507,16 @@ class RegStats
             },
             plugins: [htmlLegendPlugin]
         });
+
+        const statusTbody = document.querySelector("#ef-rs-reg-types-table tbody");
+        chart.data.labels.forEach((label, index) => {
+            const slug = label.toLowerCase().replaceAll(/[^a-z]/g, "-");
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${label}</td><td id="ef-rs-reg-types-table-${slug}">${chart.data.datasets[0].data[index]}</td>`;
+            statusTbody.appendChild(row);
+        });
+
+        return chart;
     }
 
     updateTypes()
@@ -503,6 +532,16 @@ class RegStats
         this.charts.types.options.plugins.htmlLegend.values = values;
 
         this.charts.types.update();
+
+        this.charts.types.data.labels.forEach((label, index) => {
+            const slug = label.toLowerCase().replaceAll(/[^a-z]/g, "-");
+            const element = document.getElementById(
+                `ef-rs-reg-types-table-${slug}`,
+            );
+            if (element.innerText !== values[index].toString()) {
+                element.innerText = values[index].toString();
+            }
+        });
     }
 
     updateInterests()
