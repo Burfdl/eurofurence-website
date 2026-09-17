@@ -103,7 +103,7 @@
 </section>
 */ ?>
 
-<?php /*
+
 <section>
     <h1>Partner Deals</h1>
     <p>More options provided by our partner, Kuoni:</p>
@@ -130,4 +130,3 @@
         </div>
     </div>
 </section>
-*/ ?>
